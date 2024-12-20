@@ -1,2 +1,2 @@
-# my-react-fpp
-my-react-fpp on GitHub
+# my-react-app
+my-react-app on GitHub
