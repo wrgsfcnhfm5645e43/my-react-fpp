@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            background:linear-gradient(0deg, rgb(40, 44, 76) 0%, rgb(211, 213, 219) 86%);
+            padding: 20px;
+            font-size: 2em;
+            color: rgb(40, 44, 81);
+        }
+
+        .character-detail {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #1e293b;
+            border-radius: 10px;
+        }
+
+        .character-detail h1 {
+            color: #ffdf6b;
+        }
+
+        .character-detail img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .character-detail p {
+            font-size: 1.1em;
+        }
+        
+    </style>
+</head>
+<body>
+  
+    </div>
+    <header>Character Information</header>
+    <div class="character-detail" id="character-detail">
+        <!-- Информация о персонаже будет загружена сюда -->
+    </div>
+    <div class="container">
+        <h2>Регистрация</h2>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Пароль" required>
+        <button onclick="registerUser()">Зарегистрироваться</button>
+        <p id="message"></p>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const characterName = params.get('name');
+
+        const characters = [
+            { name: "Монки Д. Луффи", img: "img/луфи.jpg", history: "Монки Д. Луффи — капитан Пиратов Соломенной Шляпы. Его цель — стать Королем Пиратов." },
+            { name: "Ророноа Зоро", img: "img/зоро.jpg", history: "Ророноа Зоро — первый член команды Луффи, мастер меча, который стремится стать лучшим мечником мира." },
+            { name: "Нами", img: "img/нами.jpg", history: "Нами — навигатор команды Луффи, мечтает создать карту мира." },
+            { name: "усопп", img: "img/усоп.jpg", history: "длинонаносый врун который в команди луфи не фруктовик владеет воляй наблюдения снайпер" },
+            { name: "санжи", img: "img/.jpg", history: "кок черная нога санджи из симьи под названием 66 он  " },
+            { name: "робин", img: "img/.jpg", history: "" },
+            { name: "френки", img: "img/.jpg", history: "" },
+            { name: "брук", img: "img/.jpg", history: "" },
+            { name: "джимбий", img: "img/.jpg", history: "" },
+            { name: "чопер", img: "img/.jpg", history: "" },
+            { name: "шанкс", img: "img/.jpg", history: "" },
+            { name: "трафольгар ло", img: "img/.jpg", history: "" },
+            { name: "кид", img: "img/.jpg", history: "" },
+            { name: "иван", img: "img/.jpg", history: "" },
+            { name: "бон-тян", img: "img/.jpg", history: "" },
+            { name: "белолус", img: "img/.jpg", history: "" },
+            { name: "одан", img: "img/.jpg", history: "" },
+            { name: "кайдо", img: "img/.jpg", history: "" },
+            { name: "черная борода", img: "img/.jpg", history: "" },
+            { name: "баги", img: "img/.jpg", history: "" },
+            { name: "акаено", img: "img/.jpg", history: "" },
+            { name: "большая мамтчка", img: "img/.jpg", history: "" },
+            { name: "акаено", img: "img/.jpg", history: "" },
+            { name: "аокитза", img: "img/.jpg", history: "" },
+            { name: "до фломинго", img: "img/.jpg", history: "" },
+            // Добавь другие персонажи по аналогии
+        ];
+
+        const character = characters.find(c => c.name === characterName);
+
+        if (character) {
+            const detailDiv = document.getElementById('character-detail');
+            detailDiv.innerHTML = `
+                <h1>${character.name}</h1>
+                <img src="${character.img}" alt="${character.name}">
+                <p>${character.history}</p>
+            `;
+        } else {
+            document.getElementById('character-detail').innerHTML = "<p>Персонаж не найден.</p>";
+        }
+    </script>
+</body>
+</html>

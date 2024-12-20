@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece Characters</title>
+    <style>
+        /* Стиль остается прежним, включая стили для переворота карт */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            background:linear-gradient(0deg, rgb(40, 44, 76) 0%, rgb(211, 213, 219) 86%)  ;
+            padding: 20px;
+            font-size: 2em;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #1e293b;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        nav button {
+            background-color: #656062;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        nav button:hover {
+            background-color: #ff5670;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .characters {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .character-card {
+            width: 200px;
+            height: 300px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .card-inner:hover {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            backface-visibility: hidden;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card-front {
+            background-color: #1e293b;
+        }
+
+        .card-back {
+            background-color: #656062;
+            color: black;
+            transform: rotateY(180deg);
+            padding: 10px;
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .character-info {
+            margin-top: 10px;
+        }
+
+        .character-info h3 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #ffdf6b;
+        }
+
+        .character-info button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: #38a169;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .character-info button:hover {
+            background: #2f855a;
+        }
+        header{
+            color:rgb(44, 40, 76)
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>One Piece Characters</header>
+    <nav>
+        <button onclick="filterCharacters('mugiwara')">Мугивары</button>
+        <button onclick="filterCharacters('allies')">Союзники</button>
+        <button onclick="filterCharacters('enemies')">Враги</button>
+        <button onclick="filterCharacters('pogib')">погибшие</button>
+    </nav>
+    <div class="container">
+        <div class="characters" id="characters"></div>
+    </div>
+
+    <script>
+        const characters = [
+            { name: "Монки Д. Луффи", img: "img/луфи.jpg", group: "mugiwara", history: "Фрукт гомо гомо владеет воляй наблюдения королевской воляй и он капитан команды" },
+            { name: "Ророноа Зоро", img: "img/зоро.jpg", group: "mugiwara", history: "Ророноа Зоро — первый член команды Луффи, мастер меча, который стремится стать лучшим мечником мира." },
+            { name: "Нами", img: "img/нами.jpg", group: "mugiwara", history: "Нами — навигатор команды Луффи, мечтает создать карту мира." },
+            { name: "Усопп", img: "img/усоп.jpg", group: "mugiwara", history: "Усопп — стрелок команды, лжец, который когда-то мечтал стать великим воином моря." },
+            { name: "Санджи", img: "img/санджии.jpg", group: "mugiwara", history: "Санджи — повар команды, мечтает найти All Blue — место, где сливаются все моря." },
+            { name: "Тони Тони Чоппер", img: "img/чопер.jpg", group: "mugiwara", history: "Чоппер — врач команды, енотовидный человек, который ел плод Хито Хито." },
+            { name: "Нико Робин", img: "img/робин.webp", group: "mugiwara", history: "Нико Робин — археолог, которая изучает Письмена Древних, цель которой — узнать истину о мире." },
+            { name: "Фрэнки", img: "img/френк.jpg", group: "mugiwara", history: "Фрэнки — корабельный плотник команды, человек-киборг, который создал для команды корабль 'Плавучий Десант'." },
+            { name: "Брук", img: "img/брук.jpg", group: "mugiwara", history: "Брук — музыкант команды, скелет, который вернулся к жизни благодаря плоду Хито Хито." },
+            { name: "Джимбей", img: "img/джимбий.jpg", group: "mugiwara", history: "Джимбей — рыбочеловек, бывший капитан Пиратов Шарку и член команды Луффи." },
+
+
+
+            // Пример союзников
+            { name: "Шанкс", img: "img/шанкс.jpg", group: "allies", history: "Шанкс — капитан Красных Пиратов, друг Луффи и один из Четырех Императоров." },
+            { name: "Трафальгар Ло", img: "img/трафальгар ло.jpg", group: "allies", history: "Трафальгар Ло — капитан Пиратов Синий Плавник, союзник Луффи." },
+            { name: "кит", img: "img/кид.jpg", group: "allies", history: "Трафальгар Ло — капитан Пиратов Синий Плавник, союзник Луффи." },
+            { name: "одан", img: "img/одан.jpg", group: "allies", history: "Трафальгар Ло — капитан Пиратов Синий Плавник, союзник Луффи." },
+             { name: "бон", img: "img/бон.jpg", group: "allies", history: "Трафальгар Ло — капитан Пиратов Синий Плавник, союзник Луффи." },
+            { name: "эйс", img: "img/эйс.jpg",  group: "pogib", history: "Трафальгар Ло — капитан Пиратов Синий Плавник, союзник Луффи." },
+            { name: "бартеломело", img: "img/бартеломело.jpg", group: "allies", history: "" },
+            { name: "", img: "img/рейно.jpg", group: "allies", history: "" },
+
+
+            // Пример врагов
+            { name: "Кайдо", img: "img/кайдо.jpg", group: "enemies", history: "Кайдо — один из Четырех Императоров, стремится уничтожить Пиратов Соломенной Шляпы." },
+            { name: "Багги", img: "img/багги.jpg", group: "enemies", history: "Багги — капитан Пиратов Багги, ранее был союзником Шанка и Люссис." },
+            { name: "черная борода", img: "img/черная борода.jpg", group: "enemies", history: "" },
+            { name: "большая мамочка", img: "img/большая мамочка.jpg", group: "enemies", history: "" },
+            { name: "пудинг", img: "img/пудинг.jpg", group: "enemies", history: "" },
+            { name: "смоки", img: "img/смоки.jpg", group: "enemies", history: "" },
+            { name: "аокитза", img: "imges/кайдо.jpg", group: "enemies", history: "" },
+            { name: " ", img: "img/свет.jpg", group: "enemies", history: "" },
+            { name: "акаено", img: "img/акаенно.jpg", group: "enemies", history: "" },
+            { name: "фламинго", img: "img/фламинго.jpg", group: "enemies", history: "" },
+
+
+            // погибшие 
+            { name: "белалус", img: "img/белолус.jpg",  group: "pogib", history: "" },
+            
+            { name: "", img: "img/.jpg",  group: "pogib", history: "" },
+
+            { name: "", img: "img/.jpg",  group: "pogib", history: "" },
+
+            { name: "", img: "img/.jpg",  group: "pogib", history: "" },
+
+            { name: "", img: "img/.jpg",  group: "pogib", history: "" },
+
+            { name: "", img: "img/.jpg",  group: "pogib", history: "" },
+            
+            { name: "", img: "img/.jpg",  group: "pogib", history: "" },
+        ];
+
+        function filterCharacters(group) {
+            const container = document.getElementById('characters');
+            container.innerHTML = ''; // Очищаем контейнер
+            characters
+                .filter(character => group === character.group || group === 'all')
+                .forEach((character, index) => {
+                    const card = `
+                        <div class="character-card">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <img src="${character.img}" alt="${character.name}">
+                                </div>
+                                <div class="card-back">
+                                    <div class="character-info">
+                                        <h3>${character.name}</h3>
+                                        <button onclick="window.location.href='Untitled-1.html?name=${character.name}'">История персонажа</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    container.innerHTML += card;
+                });
+        }
+
+        // Инициализация с показом всех персонажей
+        filterCharacters('all');
+        
+    </script>
+</body>
+</html>
